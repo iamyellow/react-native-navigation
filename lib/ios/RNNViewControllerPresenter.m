@@ -34,11 +34,15 @@
 	UIViewController* viewController = self.bindedViewController;
 	[viewController rnn_setBackgroundImage:[options.backgroundImage getWithDefaultValue:nil]];
 	[viewController rnn_setNavigationItemTitle:[options.topBar.title.text getWithDefaultValue:nil]];
+	#if !TARGET_OS_TV
 	[viewController rnn_setTopBarPrefersLargeTitle:[options.topBar.largeTitle.visible getWithDefaultValue:NO]];
+	#endif
 	[viewController rnn_setTabBarItemBadgeColor:[options.bottomTab.badgeColor getWithDefaultValue:nil]];
+	#if !TARGET_OS_TV
 	[viewController rnn_setStatusBarBlur:[options.statusBar.blur getWithDefaultValue:NO]];
 	[viewController rnn_setStatusBarStyle:[options.statusBar.style getWithDefaultValue:@"default"] animated:[options.statusBar.animate getWithDefaultValue:YES]];
 	[viewController rnn_setBackButtonVisible:[options.topBar.backButton.visible getWithDefaultValue:YES]];
+	#endif
 	[viewController rnn_setInterceptTouchOutside:[options.overlay.interceptTouchOutside getWithDefaultValue:YES]];
 	
 	if (options.layout.backgroundColor.hasValue) {
@@ -50,7 +54,9 @@
 		if (options.topBar.hideNavBarOnFocusSearchBar.hasValue) {
 			hideNavBarOnFocusSearchBar = options.topBar.hideNavBarOnFocusSearchBar.get;
 		}
+		#if !TARGET_OS_TV
 		[viewController rnn_setSearchBarWithPlaceholder:[options.topBar.searchBarPlaceholder getWithDefaultValue:@""] hideNavBarOnFocusSearchBar: hideNavBarOnFocusSearchBar];
+		#endif
 	}
 	
 	[self setTitleViewWithSubtitle:options];
@@ -92,7 +98,9 @@
 		if (newOptions.topBar.hideNavBarOnFocusSearchBar.hasValue) {
 			hideNavBarOnFocusSearchBar = newOptions.topBar.hideNavBarOnFocusSearchBar.get;
 		}
+		#if !TARGET_OS_TV
 		[viewController rnn_setSearchBarWithPlaceholder:[newOptions.topBar.searchBarPlaceholder getWithDefaultValue:@""] hideNavBarOnFocusSearchBar:hideNavBarOnFocusSearchBar];
+		#endif
 	}
 	
 	if (newOptions.topBar.drawBehind.hasValue) {
@@ -103,9 +111,11 @@
 		[viewController rnn_setNavigationItemTitle:newOptions.topBar.title.text.get];
 	}
 	
+	#if !TARGET_OS_TV
 	if (newOptions.topBar.largeTitle.visible.hasValue) {
 		[viewController rnn_setTopBarPrefersLargeTitle:newOptions.topBar.largeTitle.visible.get];
 	}
+	#endif
 	
 	if (newOptions.bottomTabs.drawBehind.hasValue) {
 		[viewController rnn_setDrawBehindTabBar:newOptions.bottomTabs.drawBehind.get];
@@ -123,10 +133,11 @@
 		[viewController.tabBarController rnn_setCurrentTabIndex:[viewController.tabBarController.viewControllers indexOfObject:viewController]];
 	}
 	
+	#if !TARGET_OS_TV
 	if (newOptions.statusBar.blur.hasValue) {
 		[viewController rnn_setStatusBarBlur:newOptions.statusBar.blur.get];
 	}
-	
+		
 	if (newOptions.statusBar.style.hasValue) {
 		[viewController rnn_setStatusBarStyle:newOptions.statusBar.style.get animated:[newOptions.statusBar.animate getWithDefaultValue:YES]];
 	}
@@ -134,6 +145,7 @@
 	if (newOptions.topBar.backButton.visible.hasValue) {
 		[viewController rnn_setBackButtonVisible:newOptions.topBar.backButton.visible.get];
 	}
+	#endif
 	
 	if (newOptions.topBar.leftButtons || newOptions.topBar.rightButtons) {
 		RNNNavigationOptions* buttonsResolvedOptions = [(RNNNavigationOptions *)[currentOptions overrideOptions:newOptions] withDefault:defaultOptions];
