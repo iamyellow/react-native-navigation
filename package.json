@@ -39,7 +39,8 @@
     "prerelease": "npm run build",
     "release": "node ./scripts/release",
     "local-docs": "node ./scripts/local-docs",
-    "gen-docs": "ts-node ./scripts/gen-docs/Main"
+    "gen-docs": "ts-node ./scripts/gen-docs/Main",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "react": "*",
@@ -106,12 +107,7 @@
     ],
     "resetMocks": true,
     "resetModules": true,
-    "coverageReporters": [
-      "json",
-      "lcov",
-      "text",
-      "html"
-    ]
+    "coverageReporters": ["json", "lcov", "text", "html"]
   },
   "detox": {
     "test-runner": "jest",
